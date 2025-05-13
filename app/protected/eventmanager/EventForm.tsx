@@ -46,7 +46,6 @@ export function EventForm() {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     const supabase = createClient(supabaseUrl, supabaseKey)
-
     await supabase.from('events').insert([values])
     console.log(values)
   }
