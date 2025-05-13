@@ -13,9 +13,7 @@ export default async function Page() {
                     <h2 className="text-xl font-bold break-words">{event.title}</h2>
                     <div className='flex flex-col gap-2'>
                     </div>
-                    {event.description.map((block, index) => (
-                        <p key={index}>{block.content}</p>
-                    ))}
+                        <p>{event.description}</p>
                     <QRCodeGenerator event={event} />
                 </div>
             ))}

@@ -3,24 +3,43 @@
 
 import { QRCodeSVG } from 'qrcode.react'
 
-export default function QRCodeGenerator({ event }) {
+function toICalDate(dateString: string) {
+  const date = new Date(dateString)
+  return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')
+}
+
+  type EventType = {
+  id?: number
+  title: string
+  description: string
+  start_date: string
+  end_date: string
+  target: string
+}
+
+export default function QRCodeGenerator({ event } : { event: EventType }) {
     if (!event?.start_date || !event?.end_date || !event?.title || !event?.description) return null
 
-    const dtStart = new Date(event.start_date).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
-    const dtEnd = new Date(event.end_date).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+const dtStart = toICalDate(event.start_date)
+const dtEnd = toICalDate(event.end_date)
+const dtStamp = toICalDate(String(new Date()))
+const uid = `${event.id || 'generated-id'}@fidduha`
 
-    const ical = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'BEGIN:VEVENT',
-      `SUMMARY:${event.title}`,
-      `DTSTART:${dtStart}`,
-      `DTEND:${dtEnd}`,
-      'LOCATION:Online',
-      `DESCRIPTION:${event.description.map(b => b.content).join(' ')}`,
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\n')
-    console.log('ical', ical)
-    return <QRCodeSVG value={ical} />
+const ical = [
+  'BEGIN:VCALENDAR',
+  'VERSION:2.0',
+  'PRODID:-//fidduha//EventManager//EN',
+  'BEGIN:VEVENT',
+  `UID:${uid}`,
+  `DTSTAMP:${dtStamp}`,
+  `SUMMARY:${event.title}`,
+  `DTSTART:${dtStart}`,
+  `DTEND:${dtEnd}`,
+  `DESCRIPTION:${event.description}`,
+  'END:VEVENT',
+  'END:VCALENDAR'
+].join('\n')
+
+    console.log(ical)
+return <QRCodeSVG value={ical} />
 }
