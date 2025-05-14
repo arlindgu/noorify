@@ -1,5 +1,4 @@
 // components/QRCodeGenerator.tsx
-'use client'
 
 import { QRCodeSVG } from 'qrcode.react'
 

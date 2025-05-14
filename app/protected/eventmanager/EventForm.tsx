@@ -15,31 +15,36 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createClient } from '@supabase/supabase-js'
+import { Textarea } from "@/components/ui/textarea"
 
 
 
 export function EventForm() {
-
     const formSchema = z.object({
-    created_at: z.string().optional(),
-    title: z.string().nullable(),
-    description: z.any().nullable(),
-    target: z.string().nullable(),
-    start_date: z.string().nullable(),
-    end_date: z.string().nullable(),
+    created_at: z.string(),
+    title: z.string(),
+    description: z.string(),
+    target: z.string(),
+    start_date: z.string(),
+    end_date: z.string(),
   });
 
     const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
         created_at: new Date().toISOString(),
-        title: '',
-        description: '',
-        target: '',
+        title: "",
+        description: "",
+        target: "",
         start_date: new Date().toISOString(),
         end_date: new Date().toISOString(),
     },
   })
+
+  function validateInput(value: string) {
+    
+  }
+
 
     // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -52,7 +57,7 @@ export function EventForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 w-7xl">
 
         <FormField
           control={form.control}
@@ -75,7 +80,7 @@ export function EventForm() {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input placeholder="Event Titel" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -89,7 +94,7 @@ export function EventForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
