@@ -1,5 +1,4 @@
 'use client'
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -16,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { createClient } from '@supabase/supabase-js'
 import { Textarea } from "@/components/ui/textarea"
+import { useEffect, useState } from "react"
 
 
 
@@ -55,6 +55,13 @@ export function EventForm() {
     console.log(values)
   }
 
+  const [dateNow, setDateNow] = useState(new Date().toISOString())
+
+      useEffect(() => {
+        const now = new Date().toISOString()
+        setDateNow(now)
+      }, [dateNow])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 w-7xl">
@@ -66,7 +73,12 @@ export function EventForm() {
             <FormItem>
               <FormLabel>Created At</FormLabel>
               <FormControl>
-                <Input type="datetime-local" {...field} />
+                <Input
+                  readOnly
+                  type="datetime-local"
+                  defaultValue={dateNow}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

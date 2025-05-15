@@ -1,51 +1,46 @@
-"use client";
-import { SunDim, SunMedium, Sun, Sunset, MoonStar, Moon } from "lucide-react";
-import { useEffect, useState } from "react";
-import '@/utils/exportHours';
+import { getPrayerTimes } from "./PrayerTimePage";
 
-export default function PrayerTimesPage() {
 
-  const [apiData, setApiData] = useState<any>(null);
 
-  useEffect(() => {
-    fetch("https://www.muwaqqit.com/api2.json?=&d=2025-05-14&tz=Europe/Zurich&ln=9.0341907&lt=47.4584301&diptype=apparent&era=-16.0&ea=-19.0&eh=563.0&eo=563.0&fa=-19.0&fea=1.0&ia=4.5&isn=-10.0&k=0.155&p=1010.0&t=15.0&rsa=1.0&vc=5.65&zt=1.0")  // dein kompletter Link hier
-      .then(res => res.json())
-      .then(data => {
-        setApiData(data);
-      });
-  }, []);
 
-  const prayerTimes = [
-    { name: 'Fajr', time: '6:00', icon: <SunDim /> },
-    { name: 'Dhuhr', time: '12:00', icon: <Sun /> },
-    { name: 'Asr', time: '15:30', icon: <SunMedium /> },
-    { name: 'Maghrib', time: '18:00', icon: <Sunset /> },
-    { name: 'Isha', time: '19:30', icon: <Moon /> },
-    { name: 'Tahajjud', time: '03:00', icon: <MoonStar /> }]
 
-  if (apiData) {
-    console.log('apiData', apiData);
-    prayerTimes[0].time = apiData.fajr.exportHours();
-    prayerTimes[1].time = apiData.zohr.exportHours();
-    prayerTimes[2].time = apiData.asr_hanafi.exportHours();
-    prayerTimes[3].time = apiData.sunset.exportHours();
-    prayerTimes[4].time = apiData.esha.exportHours();
-    prayerTimes[5].time = apiData.two_thirds_night.exportHours();
+export default async function PrayerTimePage() {
+
+  const prayerTimes = await getPrayerTimes()
+  console.log('prayerTimes', prayerTimes)
+
+  function formatTime(t) {
+    if (t.hours == null || t.minutes == null || t.seconds == null) return null
+    return `${t.hours.toString().padStart(2, '0')}:${t.minutes.toString().padStart(2, '0')}:${t.seconds.toString().padStart(2, '0')}`
   }
 
 
-
   return (
-    <main className="">
-      <div className="flex flex-wrap gap-4 align-center justify-center h-32">
+    <main className="flex flex-col gap-8">
+      <h1 className="text-3xl font-bold text-center">{/*MOSQUE NAME */}</h1>
+      <div className="flex flex-wrap gap-4 align-center justify-center h-fit">
         {prayerTimes.map((prayer) => (
           <div key={prayer.name} className="border rounded-md p-4 min-w-32 flex flex-col gap-1">
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-col justify-between items-center">
+              <div> {prayer.icon}</div>
               <h2 className="font-bold break-words">{prayer.name}</h2>
-              <span> {prayer.icon}</span>
             </div>
-            <div>
-              <span className='text-xs'>{prayer.time}</span>
+            <div className="text-center justify-center">
+              <span className="text-xl font-bold">
+                {prayer.time.getHours().toString().padStart(2, '0')}:
+                {prayer.time.getMinutes().toString().padStart(2, '0')}
+              </span>
+              <div className="text-xs text-gray-400">
+                <div className="text-xs text-gray-400">
+                  {prayer.timeRemaining.hours != null &&
+                    `${prayer.timeRemaining.hours.toString().padStart(2, '0')}:`}
+                  {prayer.timeRemaining.minutes != null &&
+                    `${prayer.timeRemaining.minutes.toString().padStart(2, '0')}:`}
+                  {prayer.timeRemaining.seconds != null &&
+                    `${prayer.timeRemaining.seconds.toString().padStart(2, '0')}`}
+                </div>
+
+              </div>
             </div>
 
           </div>
