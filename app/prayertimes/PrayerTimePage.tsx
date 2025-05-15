@@ -1,4 +1,26 @@
+import React, { JSX } from "react";
+
 import { SunDim, SunMedium, Sun, Sunset, MoonStar, Moon } from "lucide-react"
+import { createClient } from '@/utils/supabase/server'
+import { boolean } from "zod";
+export async function getMosqueConfig() {
+   const supabase = await createClient()
+    let { data: mosque_config } = await supabase.from('mosque_config').select()
+    return mosque_config
+}
+
+function createPrayerTime(name: string, dateString: string, icon: JSX.Element) {
+  const date = new Date(dateString);
+  return {
+    name,
+    time: date,
+    icon,
+    timePassed: new Date() > date,
+    timeRemaining: calculateTimeRemaining(date),
+    currentPrayer: boolean
+  };
+}
+
 
 export async function getPrayerTimes() {
   const res = await fetch(
@@ -10,14 +32,14 @@ export async function getPrayerTimes() {
 
   const now = new Date()
 
-  const times = [
-    { name: 'Fajr', time: new Date(data.fajr), icon: <SunDim />, timePassed: now > new Date(data.fajr), timeRemaining: calculateTimeRemaining(new Date(data.fajr)) },
-    { name: 'Dhuhr', time: new Date(data.zohr), icon: <Sun />, timePassed: now > new Date(data.zohr), timeRemaining: calculateTimeRemaining(new Date(data.zohr)) },
-    { name: 'Asr', time: new Date(data.asr_shafi), icon: <SunMedium />, timePassed: now > new Date(data.asr_shafi), timeRemaining: calculateTimeRemaining(new Date(data.asr_shafi)) },
-    { name: 'Maghrib', time: new Date(data.sunset), icon: <Sunset />, timePassed: now > new Date(data.sunset), timeRemaining: calculateTimeRemaining(new Date(data.sunset)) },
-    { name: 'Isha', time: new Date(data.esha), icon: <Moon />, timePassed: now > new Date(data.esha), timeRemaining: calculateTimeRemaining(new Date(data.esha)) },
-    { name: 'Tahajjud', time: new Date(data.two_thirds_night), icon: <MoonStar />, timePassed: now > new Date(data.two_thirds_night), timeRemaining: calculateTimeRemaining(new Date(data.two_thirds_night)) },
-  ]
+const times = [
+  createPrayerTime('Fajr', data.fajr, <SunDim />),
+  createPrayerTime('Dhuhr', data.zohr, <Sun />),
+  createPrayerTime('Asr', data.asr_shafi, <SunMedium />),
+  createPrayerTime('Maghrib', data.sunset, <Sunset />),
+  createPrayerTime('Isha', data.esha, <Moon />),
+  createPrayerTime('Tahajjud', data.two_thirds_night, <MoonStar />),
+];
 
   return times
 }
