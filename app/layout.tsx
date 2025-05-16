@@ -51,6 +51,12 @@ export default function RootLayout({
                     <Link href="/events" className="text-sm font-semibold">
                       Events
                     </Link>
+                    <Link href="/protected/createEvent" className="text-sm font-semibold">
+                      createEvent [Protected]
+                    </Link>
+                    <Link href="/protected/editEvent" className="text-sm font-semibold">
+                      editEvent [Protected]
+                    </Link>
                     </div>
                   {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
                   <ThemeSwitcher />

@@ -20,6 +20,14 @@ import { useEffect, useState } from "react"
 
 
 export function EventForm() {
+
+    const [dateNow, setDateNow] = useState(new Date())
+
+      useEffect(() => {
+        const now = new Date()
+        setDateNow(now)
+      }, [])
+
     const formSchema = z.object({
     created_at: z.string(),
     title: z.string(),
@@ -41,26 +49,25 @@ export function EventForm() {
     },
   })
 
-  function validateInput(value: string) {
-    
-  }
-
-
     // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const appendOffset = (dateStr: string) => dateStr + '+02:00'
+
+    const payload = {
+      ...values,
+      created_at: appendOffset(values.created_at),
+      start_date: appendOffset(values.start_date),
+      end_date: appendOffset(values.end_date),
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     const supabase = createClient(supabaseUrl, supabaseKey)
-    await supabase.from('events').insert([values])
-    console.log(values)
+    await supabase.from('events').insert([payload])
+    console.log(payload)
   }
 
-  const [dateNow, setDateNow] = useState(new Date().toISOString())
 
-      useEffect(() => {
-        const now = new Date().toISOString()
-        setDateNow(now)
-      }, [dateNow])
 
   return (
     <Form {...form}>
@@ -74,9 +81,7 @@ export function EventForm() {
               <FormLabel>Created At</FormLabel>
               <FormControl>
                 <Input
-                  readOnly
                   type="datetime-local"
-                  defaultValue={dateNow}
                   {...field}
                 />
               </FormControl>
