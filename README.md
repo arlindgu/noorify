@@ -1,5 +1,7 @@
-![Untitled](https://github.com/user-attachments/assets/895ee920-c165-4f96-8ca5-f072a5bda147)<a href="https://demo-nextjs-with-supabase.vercel.app/">
-<svg width="50%" height="50%" viewBox="0 0 542 146" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+![Untitled](https://github.com/user-attachments/assets/539e9801-3e71-4ec4-b0da-5d6071e1ef20)<a href="https://demo-nextjs-with-supabase.vercel.app/">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 542 146" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <g transform="matrix(1,0,0,1,-269.438,-467.26)">
         <g transform="matrix(3.16261,0,0,3.16261,-763.107,-1215.5)">
             <g transform="matrix(50,0,0,50,326.685,568.079)">
@@ -37,10 +39,9 @@
 <p align="center">
   <a href="#features"><strong>Features</strong></a> ·
   <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Self-Host</strong></a> ·
+  <a href="#self-host"><strong>Self-Host</strong></a> ·
   <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
   <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
 </p>
 <br/>
 
