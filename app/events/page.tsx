@@ -2,15 +2,21 @@ import { createClient } from '@/utils/supabase/server'
 import QRCodeGenerator from '@/app/events/EventsPage'
 import '@/utils/normalizeDate';
 import '@/utils/exportHours';
+import { checkExpired } from '@/app/events/checkExpired'
 
 export default async function Page() {
 
-    
-
+    await checkExpired()
 
     const supabase = await createClient()
-    let { data: events } = await supabase.from('events').select()
-    console.log('events', events)
+    
+    // Nur Events laden, die NICHT expired sind (eventPassed ist nicht true)
+    let { data: events } = await supabase
+        .from('events')
+        .select()
+        .or('eventPassed.is.null,eventPassed.eq.false') // nur null oder false
+    
+//    console.log('events', events)
 
     const dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag']
     const monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember']
@@ -41,10 +47,10 @@ export default async function Page() {
                         <span className='text-xs'></span>
                     </div>
                         <span className='text-xs'>{event.description}</span>
-                    <QRCodeGenerator event={event} />
+                            <QRCodeGenerator event={event} />
+                    
                 </div>
             ))}
-
         </div>
     </main>
 }

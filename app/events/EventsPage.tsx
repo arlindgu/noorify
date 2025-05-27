@@ -22,12 +22,12 @@ export default function QRCodeGenerator({ event } : { event: EventType }) {
 const dtStart = toICalDate(event.start_date)
 const dtEnd = toICalDate(event.end_date)
 const dtStamp = toICalDate(String(new Date()))
-const uid = `${event.id || 'generated-id'}@fidduha`
+const uid = `${event.id || 'generated-id'}@noorify`
 
 const ical = [
   'BEGIN:VCALENDAR',
   'VERSION:2.0',
-  'PRODID:-//fidduha//EventManager//EN',
+  'PRODID:-//noorify//EventManager//EN',
   'BEGIN:VEVENT',
   `UID:${uid}`,
   `DTSTAMP:${dtStamp}`,
@@ -38,7 +38,5 @@ const ical = [
   'END:VEVENT',
   'END:VCALENDAR'
 ].join('\n')
-
-    console.log(ical)
-return <QRCodeSVG value={ical} />
+return <QRCodeSVG className="border-2 border-white"value={ical} />
 }

@@ -19,10 +19,13 @@ export default function Countdown({ targetTime }: { targetTime: number }) {
 
   return (
     <span>
+
       {remaining.hours.toString().padStart(2, "0")}:
       {remaining.minutes.toString().padStart(2, "0")}:
       {remaining.seconds.toString().padStart(2, "0")}
+
     </span>
+
   );
 }
 

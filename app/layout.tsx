@@ -13,7 +13,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "FIDDUHA",
+  title: "noorify",
   description: "Mosque Management System",
 };
 
@@ -59,12 +59,13 @@ export default function RootLayout({
                     </Link>
                     </div>
                   {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-                  <ThemeSwitcher />
+                  
                 </div>
               </nav>
-              <div className="flex flex-col gap-20 max-w-5xl p-5">
+              <div id="MAIN" className="flex flex-col gap-20 p-5">
                 {children}
               </div>
+               <ThemeSwitcher />
             </div>
           </main>
         </ThemeProvider>

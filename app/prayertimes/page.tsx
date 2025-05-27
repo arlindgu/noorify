@@ -11,6 +11,7 @@ export default async function PrayerTimePage() {
     <main className="flex flex-col gap-8">
       <h1 className="text-3xl font-bold text-center">{data?.[0]?.name ?? "Unbekannte Moschee"}</h1>
       <div className="flex flex-wrap gap-4 align-center justify-center h-fit">
+
         {prayerTimes.map((prayer) => (
           <div key={prayer.name} className="border rounded-md p-4 min-w-32 flex flex-col gap-1">
             <div className="flex flex-col justify-between items-center">
@@ -28,8 +29,10 @@ export default async function PrayerTimePage() {
             </div>
 
           </div>
+
         ))}
-      </div>
-    </main>
+
+    </div>
+    </main >
   );
 }
