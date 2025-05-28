@@ -38,6 +38,7 @@
 
 <p align="center">
   <a href="#features"><strong>Features</strong></a> ·
+<a href="#feedback-and-issues"><strong>Future Features</strong></a>
   <a href="#demo"><strong>Demo</strong></a> ·
   <a href="#self-host"><strong>Self-Host</strong></a> ·
   <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
@@ -50,6 +51,9 @@
 - Manage your Prayertimes
 - Display Prayertimes on a TV
 - Display Events on a TV
+
+## Demo
+- [ ] Monthly Prayertimes PDF creation
 
 ## Demo
 
